@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 
 import Header from "./components/Header";
+import PerformanceComparison from "./components/PerformanceComparison";
 import PerformancePanel from "./components/PerformancePanel";
 import ProductFilters from "./components/ProductFilters";
 import ProductList from "./components/ProductList";
@@ -75,6 +76,8 @@ function App() {
                     onCounterChange={handleCounterChange}
                     calculationCount={calculationCount.current}
                 />
+
+                <PerformanceComparison />
 
                 <ProductFilters
                     search={search}
