@@ -294,3 +294,142 @@
         display: none;
     }
 }
+
+/* =========================
+   PERFORMANCE PANEL
+========================= */
+
+.performance-panel {
+    margin-bottom: 24px;
+
+    background: white;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+}
+
+.performance-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.performance-header h2 {
+    margin: 0 0 5px;
+
+    color: #0f172a;
+    font-size: 19px;
+}
+
+.performance-header p {
+    margin: 0;
+
+    color: #64748b;
+    font-size: 13px;
+}
+
+.before-badge {
+    padding: 6px 11px;
+
+    background: #fef2f2;
+    color: #dc2626;
+
+    border: 1px solid #fecaca;
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.performance-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    align-items: center;
+    gap: 20px;
+
+    padding: 24px;
+}
+
+.performance-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.performance-stat span {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.performance-stat strong {
+    color: #0f172a;
+    font-size: 24px;
+}
+
+.counter-button {
+    min-height: 44px;
+
+    padding: 0 18px;
+
+    background: #0f172a;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s,
+        transform 0.2s;
+}
+
+.counter-button:hover {
+    background: #1e293b;
+
+    transform: translateY(-1px);
+}
+
+.performance-info {
+    padding: 17px 24px;
+
+    background: #fff7ed;
+
+    border-top: 1px solid #fed7aa;
+}
+
+.performance-info strong {
+    color: #9a3412;
+    font-size: 13px;
+}
+
+.performance-info p {
+    margin: 5px 0 0;
+
+    color: #9a3412;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* PERFORMANCE RESPONSIVE */
+
+@media (max-width: 700px) {
+    .performance-content {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .counter-button {
+        grid-column: 1 / -1;
+    }
+}

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import Header from "./components/Header";
+import PerformancePanel from "./components/PerformancePanel";
 import ProductFilters from "./components/ProductFilters";
 import ProductList from "./components/ProductList";
 
@@ -11,6 +12,15 @@ import "./App.css";
 function App() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All");
+    const [counter, setCounter] = useState(0);
+
+    const calculationCount = useRef(0);
+
+    console.log("App rendered");
+
+    calculationCount.current += 1;
+
+    console.log("Product calculation:", calculationCount.current);
 
     const filteredProducts = products.filter((product) => {
         const matchesSearch = product.name
@@ -28,6 +38,10 @@ function App() {
         0,
     );
 
+    const handleCounterChange = () => {
+        setCounter((currentCounter) => currentCounter + 1);
+    };
+
     return (
         <div className="app">
             <Header />
@@ -44,6 +58,12 @@ function App() {
                     </div>
                 </section>
 
+                <PerformancePanel
+                    counter={counter}
+                    onCounterChange={handleCounterChange}
+                    calculationCount={calculationCount.current}
+                />
+
                 <ProductFilters
                     search={search}
                     category={category}
@@ -54,16 +74,19 @@ function App() {
                 <section className="stats">
                     <div className="stat-card">
                         <span>Products</span>
+
                         <strong>{filteredProducts.length}</strong>
                     </div>
 
                     <div className="stat-card">
                         <span>Total Price</span>
+
                         <strong>${totalPrice.toLocaleString()}</strong>
                     </div>
 
                     <div className="stat-card">
                         <span>Category</span>
+
                         <strong>{category}</strong>
                     </div>
                 </section>
@@ -72,6 +95,7 @@ function App() {
                     <div className="section-title">
                         <div>
                             <h2>Product List</h2>
+
                             <p>Products matching the current filters</p>
                         </div>
 

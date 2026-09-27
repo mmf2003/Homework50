@@ -1,6 +1,8 @@
 import ProductItem from "./ProductItem";
 
 function ProductList({ products }) {
+    console.log("ProductList rendered");
+
     if (products.length === 0) {
         return <div className="empty-state">No products found.</div>;
     }
