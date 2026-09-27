@@ -5,10 +5,16 @@ function PerformancePanel({ counter, onCounterChange, calculationCount }) {
                 <div>
                     <h2>Performance Monitor</h2>
 
-                    <p>useMemo optimization enabled</p>
+                    <p>React memoization optimization</p>
                 </div>
 
-                <span className="optimized-badge">useMemo</span>
+                <div className="optimization-badges">
+                    <span className="optimized-badge">useMemo</span>
+
+                    <span className="optimized-badge">useCallback</span>
+
+                    <span className="optimized-badge">React.memo</span>
+                </div>
             </div>
 
             <div className="performance-content">
@@ -32,12 +38,12 @@ function PerformancePanel({ counter, onCounterChange, calculationCount }) {
             </div>
 
             <div className="performance-info performance-info--optimized">
-                <strong>useMemo is working</strong>
+                <strong>Memoization is working</strong>
 
                 <p>
-                    Changing the unrelated counter renders App again, but
-                    product calculations are not repeated because search and
-                    category have not changed.
+                    useMemo prevents unnecessary product calculations,
+                    useCallback keeps the callback reference stable, and
+                    React.memo prevents unnecessary ProductList renders.
                 </p>
             </div>
         </section>

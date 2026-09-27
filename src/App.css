@@ -457,3 +457,70 @@
 .performance-info--optimized p {
     color: #166534;
 }
+
+/* =========================
+   OPTIMIZATION BADGES
+========================= */
+
+.optimization-badges {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+/* =========================
+   SELECTABLE PRODUCT
+========================= */
+
+.product-item {
+    width: 100%;
+
+    font: inherit;
+    text-align: left;
+
+    background: white;
+    color: inherit;
+
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+
+    cursor: pointer;
+}
+
+.product-item:last-child {
+    border-bottom: none;
+}
+
+.product-item--selected {
+    background: #eff6ff;
+}
+
+.product-item--selected:hover {
+    background: #dbeafe;
+}
+
+.product-main {
+    min-width: 0;
+}
+
+.product-item:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: -2px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+    .performance-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .optimization-badges {
+        justify-content: flex-start;
+    }
+}

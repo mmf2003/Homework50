@@ -1,6 +1,8 @@
+import { memo } from "react";
+
 import ProductItem from "./ProductItem";
 
-function ProductList({ products }) {
+function ProductList({ products, selectedProductId, onSelectProduct }) {
     console.log("ProductList rendered");
 
     if (products.length === 0) {
@@ -10,10 +12,15 @@ function ProductList({ products }) {
     return (
         <div className="product-list">
             {products.map((product) => (
-                <ProductItem key={product.id} product={product} />
+                <ProductItem
+                    key={product.id}
+                    product={product}
+                    isSelected={selectedProductId === product.id}
+                    onSelectProduct={onSelectProduct}
+                />
             ))}
         </div>
     );
 }
 
-export default ProductList;
+export default memo(ProductList);

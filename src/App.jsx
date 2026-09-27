@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import Header from "./components/Header";
 import PerformancePanel from "./components/PerformancePanel";
@@ -13,6 +13,7 @@ function App() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("All");
     const [counter, setCounter] = useState(0);
+    const [selectedProductId, setSelectedProductId] = useState(null);
 
     const calculationCount = useRef(0);
 
@@ -44,6 +45,10 @@ function App() {
             totalPrice,
         };
     }, [search, category]);
+
+    const handleSelectProduct = useCallback((id) => {
+        setSelectedProductId(id);
+    }, []);
 
     const handleCounterChange = () => {
         setCounter((currentCounter) => currentCounter + 1);
@@ -105,13 +110,17 @@ function App() {
                         <div>
                             <h2>Product List</h2>
 
-                            <p>Products matching the current filters</p>
+                            <p>Click a product to select it</p>
                         </div>
 
                         <span>{productData.filteredProducts.length} items</span>
                     </div>
 
-                    <ProductList products={productData.filteredProducts} />
+                    <ProductList
+                        products={productData.filteredProducts}
+                        selectedProductId={selectedProductId}
+                        onSelectProduct={handleSelectProduct}
+                    />
                 </section>
             </main>
         </div>
