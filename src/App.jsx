@@ -1,122 +1,88 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from "react";
+
+import Header from "./components/Header";
+import ProductFilters from "./components/ProductFilters";
+import ProductList from "./components/ProductList";
+
+import { products } from "./data/products";
+
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [search, setSearch] = useState("");
+    const [category, setCategory] = useState("All");
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    const filteredProducts = products.filter((product) => {
+        const matchesSearch = product.name
+            .toLowerCase()
+            .includes(search.toLowerCase());
 
-      <div className="ticks"></div>
+        const matchesCategory =
+            category === "All" || product.category === category;
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        return matchesSearch && matchesCategory;
+    });
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    const totalPrice = filteredProducts.reduce(
+        (total, product) => total + product.price,
+        0,
+    );
+
+    return (
+        <div className="app">
+            <Header />
+
+            <main className="container">
+                <section className="page-header">
+                    <div>
+                        <h2>Products Dashboard</h2>
+
+                        <p>
+                            Explore product data and React performance
+                            optimization.
+                        </p>
+                    </div>
+                </section>
+
+                <ProductFilters
+                    search={search}
+                    category={category}
+                    onSearchChange={setSearch}
+                    onCategoryChange={setCategory}
+                />
+
+                <section className="stats">
+                    <div className="stat-card">
+                        <span>Products</span>
+                        <strong>{filteredProducts.length}</strong>
+                    </div>
+
+                    <div className="stat-card">
+                        <span>Total Price</span>
+                        <strong>${totalPrice.toLocaleString()}</strong>
+                    </div>
+
+                    <div className="stat-card">
+                        <span>Category</span>
+                        <strong>{category}</strong>
+                    </div>
+                </section>
+
+                <section className="products-section">
+                    <div className="section-title">
+                        <div>
+                            <h2>Product List</h2>
+                            <p>Products matching the current filters</p>
+                        </div>
+
+                        <span>{filteredProducts.length} items</span>
+                    </div>
+
+                    <ProductList products={filteredProducts} />
+                </section>
+            </main>
+        </div>
+    );
 }
 
-export default App
+export default App;
