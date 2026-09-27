@@ -4,10 +4,11 @@ function PerformancePanel({ counter, onCounterChange, calculationCount }) {
             <div className="performance-header">
                 <div>
                     <h2>Performance Monitor</h2>
-                    <p>Demonstration before memoization</p>
+
+                    <p>useMemo optimization enabled</p>
                 </div>
 
-                <span className="before-badge">BEFORE</span>
+                <span className="optimized-badge">useMemo</span>
             </div>
 
             <div className="performance-content">
@@ -30,12 +31,13 @@ function PerformancePanel({ counter, onCounterChange, calculationCount }) {
                 </button>
             </div>
 
-            <div className="performance-info">
-                <strong>What happens?</strong>
+            <div className="performance-info performance-info--optimized">
+                <strong>useMemo is working</strong>
 
                 <p>
-                    Changing this counter does not affect products, but App
-                    renders again and product calculations run again.
+                    Changing the unrelated counter renders App again, but
+                    product calculations are not repeated because search and
+                    category have not changed.
                 </p>
             </div>
         </section>

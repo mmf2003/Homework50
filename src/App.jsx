@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import Header from "./components/Header";
 import PerformancePanel from "./components/PerformancePanel";
@@ -18,25 +18,32 @@ function App() {
 
     console.log("App rendered");
 
-    calculationCount.current += 1;
+    const productData = useMemo(() => {
+        calculationCount.current += 1;
 
-    console.log("Product calculation:", calculationCount.current);
+        console.log("Product calculation:", calculationCount.current);
 
-    const filteredProducts = products.filter((product) => {
-        const matchesSearch = product.name
-            .toLowerCase()
-            .includes(search.toLowerCase());
+        const filteredProducts = products.filter((product) => {
+            const matchesSearch = product.name
+                .toLowerCase()
+                .includes(search.toLowerCase());
 
-        const matchesCategory =
-            category === "All" || product.category === category;
+            const matchesCategory =
+                category === "All" || product.category === category;
 
-        return matchesSearch && matchesCategory;
-    });
+            return matchesSearch && matchesCategory;
+        });
 
-    const totalPrice = filteredProducts.reduce(
-        (total, product) => total + product.price,
-        0,
-    );
+        const totalPrice = filteredProducts.reduce(
+            (total, product) => total + product.price,
+            0,
+        );
+
+        return {
+            filteredProducts,
+            totalPrice,
+        };
+    }, [search, category]);
 
     const handleCounterChange = () => {
         setCounter((currentCounter) => currentCounter + 1);
@@ -75,13 +82,15 @@ function App() {
                     <div className="stat-card">
                         <span>Products</span>
 
-                        <strong>{filteredProducts.length}</strong>
+                        <strong>{productData.filteredProducts.length}</strong>
                     </div>
 
                     <div className="stat-card">
                         <span>Total Price</span>
 
-                        <strong>${totalPrice.toLocaleString()}</strong>
+                        <strong>
+                            ${productData.totalPrice.toLocaleString()}
+                        </strong>
                     </div>
 
                     <div className="stat-card">
@@ -99,10 +108,10 @@ function App() {
                             <p>Products matching the current filters</p>
                         </div>
 
-                        <span>{filteredProducts.length} items</span>
+                        <span>{productData.filteredProducts.length} items</span>
                     </div>
 
-                    <ProductList products={filteredProducts} />
+                    <ProductList products={productData.filteredProducts} />
                 </section>
             </main>
         </div>
